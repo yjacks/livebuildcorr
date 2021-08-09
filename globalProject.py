@@ -132,7 +132,7 @@ selectTypeKeyCommon = {"APT选项": ["LB_APT",
 selectTypeKeySource = {"杂项": ["LB_SOURCE",
                               "LB_SOURCE_IMAGES"]
                        }
-selectTypeKeysNames=[
+selectTypeKeysNames = [
     selectTypeKeyBinary,
     selectTypeKeyBootstrap,
     selectTypeKeyBuild,
@@ -140,4 +140,4 @@ selectTypeKeysNames=[
     selectTypeKeyCommon,
     selectTypeKeySource
 ]
-selectTypeKeys=dict(zip(readFilesList,selectTypeKeysNames))
+selectTypeKeys = dict(zip(readFilesList, selectTypeKeysNames))

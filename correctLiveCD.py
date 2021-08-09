@@ -48,7 +48,14 @@ def DIY_live():
     os.system("mkdir squashfs-root/sys")
     os.system("rm iso/live/filesystem.squashfs")
     os.system("mksquashfs squashfs-root iso/live/filesystem.squashfs")
+    print("LiveCD系统替换完成")
 
 
 def isoBuild():
-    pass
+    os.system("chroot squashfs-root dpkg-query -W --showformat='${Package} ${Version}\n' \
+    > iso/live/filesystem.manifest")
+    os.system("cd ~/iso/ & find . -type f -print0 | xargs -0 md5sum > md5sum.txt")
+    os.system("genisoimage -R -J -l -V 'liveSystem' -cache-inodes -b iso/isolinux/isolinux.bin \
+    -c iso/isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o \
+    ./live.iso ./iso")
+    print("LiveCD生成完成")
