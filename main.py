@@ -3,3 +3,5 @@ import config
 
 config.buildConfig()
 config.readConfig()
+config.configSend()
+config.writeConfig()

@@ -1,8 +1,6 @@
-import sys
+from globalProject import *
 
-from globol import *
-
-correctList={}
+correctList = {}
 
 
 def buildConfig():
@@ -43,12 +41,8 @@ def readConfig():
     return fileMap
 
 
-def correctConfigMod(v, cor):
-    n = v.find("=")
-    return ''.join([v[0:n], v[n:cor]])
-
-
 def configSend():
+    global correctList
     print("""
     菜单依次为
     "binary"
@@ -56,6 +50,8 @@ def configSend():
     "chroot"
     "common"
     "source"
+    如果输入"exit",
+    则在全部页面都会跳转至本页面
     """)
     while True:
         cc = False
@@ -64,7 +60,8 @@ def configSend():
             clearWindow()
             treeF = input("")
             if treeF == "exit":
-                sys.exit()
+                cc = True
+                break
             try:
                 configFileSelect = selectTypeKeys[treeF]
             except:
@@ -72,8 +69,11 @@ def configSend():
             else:
                 break
         # 可选项分项菜单
+        if cc:
+            break
         while True:
             clearWindow()
+            # noinspection PyUnboundLocalVariable
             for i in list(configFileSelect.keys()):
                 print("可选项子菜单:\n")
                 print(i + "\n")
@@ -98,6 +98,7 @@ def configSend():
             n = -1
             print("选项:(填写序号)")
             for i in configFileSelect:
+                n += 1
                 print(str(n) + "\t" + i)
             while True:
                 try:
@@ -114,5 +115,25 @@ def configSend():
             # 这里要保存变量到global
             # 实现思路 保存已被定义的变量为一个字典的key,值为values
             print("输入您需要修改的值:")
-            corr_values=input()
-            correctList[treeF]=corr_values
+            corr_values = input()
+            if corr_values=="exit":
+                print("跳转到1级页面")
+                continue
+            correctList[treeF] = corr_values
+            break
+
+
+def writeConfig():
+    # 通过corrCon函数写回
+    for i in readFilesList:
+        with open(configDir+i,"r") as r:
+            sourcesSelectList=r.readlines()
+        for v in sourcesSelectList:
+            for n in correctList:
+                if n==v[0:v.find("=")]:
+                    num = sourcesSelectList.index(v)
+                    sourcesSelectList.remove(v)
+                    v=v[0:v.find("=")+1]+n
+                    sourcesSelectList.insert(num,v)
+        with open(configDir+i,"w") as w:
+            w.writelines(sourcesSelectList)
