@@ -6,7 +6,7 @@ def clearWindow():
     os.system("clear")
 
 
-configDir = "/home/jack/Data/Sources/Temp/Test/"
+configDir = ""
 readFilesList = ["binary",
                  "bootstrap",
                  "chroot",
