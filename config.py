@@ -1,7 +1,7 @@
 from globalProject import *
 
 correctList = {}
-
+configDir = "/home/jack/Data/Sources/Temp/Test"
 
 def buildConfig():
     w = open("a.sh", "w")
@@ -57,7 +57,6 @@ def configSend():
         cc = False
         # 头菜单
         while True:
-            clearWindow()
             treeF = input("")
             if treeF == "exit":
                 cc = True
@@ -73,9 +72,9 @@ def configSend():
             break
         while True:
             clearWindow()
+            print("可选项子菜单:\n")
             # noinspection PyUnboundLocalVariable
             for i in list(configFileSelect.keys()):
-                print("可选项子菜单:\n")
                 print(i + "\n")
             configFileSelectTemp = configFileSelect
             while True:
@@ -126,7 +125,7 @@ def configSend():
 def writeConfig():
     # 通过corrCon函数写回
     for i in readFilesList:
-        with open(configDir+i,"r") as r:
+        with open(configDir+"/live/config/"+i,"r") as r:
             sourcesSelectList=r.readlines()
         for v in sourcesSelectList:
             for n in correctList:
